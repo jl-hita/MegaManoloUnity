@@ -17,7 +17,7 @@ public class scFisicas : MonoBehaviour
     public static Boolean enSuelo;
     private static Vector3 spawnInicial = new Vector3(-3f, 0.55f, 0f);
     //private static Vector3 spawnInicial = new Vector3(17.1f, 0.6f, 0f);
-    public static Vector3 spawnActual = spawnInicial;
+    public static Vector3 spawnActual;
     private static Vector3 checkpoint;
     private GameObject piernas;
     private static Boolean miraDerecha;
@@ -42,6 +42,7 @@ public class scFisicas : MonoBehaviour
     void Start()
     {
         manoloRB = manolo.GetComponent<Rigidbody>();
+        spawnActual = spawnInicial;
         piernas = GameObject.Find("ColliderPiernas");
         //Controla cuando el player está en contacto con una superficie del escenario (suelo, cajas, etc)
         enSuelo = false;
@@ -120,6 +121,8 @@ public class scFisicas : MonoBehaviour
             PlayerPrefs.SetInt("finalScore", scJuego.puntuacion);
             //Nos aseguramos que scRanking guarde la nueva puntuacion con el flag addScore
             scRanking.addScore = true;
+            //Resetea el spawn (evita un bug al presionar escape y luego click en play
+            spawnActual = spawnInicial;
             //Vuelve al menú principal
             SceneManager.LoadScene(sceneBuildIndex: 0, LoadSceneMode.Single);
         }
